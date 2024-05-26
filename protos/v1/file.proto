@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import "buf/validate/validate.proto";
+
+option go_package = "github.com/breathbath/chat-protos/gen";
+
+package protos.v1;
+
+// Enum to represent known image or sound formats
+enum Format {
+  FORMAT_UNKNOWN_UNSPECIFIED = 0;
+  FORMAT_JPEG = 1;
+  FORMAT_PNG = 2;
+  FORMAT_MP3 = 3;
+  FORMAT_WAV = 4;
+}
+
+message File {
+  bytes contents = 1 [(buf.validate.field).bytes.min_len = 1];
+  string name = 2;
+  Format format = 5 [(buf.validate.field).enum.const = 1];
+}
+

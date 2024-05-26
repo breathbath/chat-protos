@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package protos.v1;
+
+import "google/api/annotations.proto";
+import "protos/v1/file.proto";
+import "protos/v1/user.proto";
+
+option go_package = "github.com/breathbath/chat-protos/gen";
+
+message ChatServiceSendRequest {
+  string id = 1;
+  User user = 2;
+  string message = 3;
+  File file = 4;
+}
+
+enum MessageFormat {
+  MESSAGE_FORMAT_UNKNOWN_UNSPECIFIED = 0;
+  MESSAGE_FORMAT_MARKDOWN_1 = 1;
+  MESSAGE_FORMAT_MARKDOWN_2 = 2;
+  MESSAGE_FORMAT_HTML = 3;
+}
+
+message Message {
+  string text = 1;
+  MessageFormat format = 2;
+}
+
+enum ResponseType {
+  RESPONSE_TYPE_UNKNOWN_UNSPECIFIED = 0;
+  RESPONSE_TYPE_SUCCESS = 1;
+  RESPONSE_TYPE_ERROR = 2;
+}
+
+message ChatResponse {
+  Message message = 1;
+  ResponseType type = 2;
+  File file = 3;
+}
+
+message ChatServiceSendResponse {
+  repeated ChatResponse messages = 1;
+}
+
+service ChatService {
+  rpc Send(ChatServiceSendRequest) returns (ChatServiceSendResponse) {
+    option (google.api.http) = {post: "/v1/send"};
+  }
+}

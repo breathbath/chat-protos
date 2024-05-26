@@ -1,0 +1,246 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "protos/v1/chat.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "ChatService"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/send": {
+      "post": {
+        "operationId": "ChatService_Send",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1ChatServiceSendResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "user.firstName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "user.userName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "user.lastName",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "user.language",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "user.id",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "message",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "file.contents",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "format": "byte"
+          },
+          {
+            "name": "file.name",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "file.format",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "enum": [
+              "FORMAT_UNKNOWN_UNSPECIFIED",
+              "FORMAT_JPEG",
+              "FORMAT_PNG",
+              "FORMAT_MP3",
+              "FORMAT_WAV"
+            ],
+            "default": "FORMAT_UNKNOWN_UNSPECIFIED"
+          }
+        ],
+        "tags": [
+          "ChatService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    },
+    "v1ChatResponse": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "#/definitions/v1Message"
+        },
+        "type": {
+          "$ref": "#/definitions/v1ResponseType"
+        },
+        "file": {
+          "$ref": "#/definitions/v1File"
+        }
+      }
+    },
+    "v1ChatServiceSendResponse": {
+      "type": "object",
+      "properties": {
+        "messages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/v1ChatResponse"
+          }
+        }
+      }
+    },
+    "v1File": {
+      "type": "object",
+      "properties": {
+        "contents": {
+          "type": "string",
+          "format": "byte"
+        },
+        "name": {
+          "type": "string"
+        },
+        "format": {
+          "$ref": "#/definitions/v1Format"
+        }
+      }
+    },
+    "v1Format": {
+      "type": "string",
+      "enum": [
+        "FORMAT_UNKNOWN_UNSPECIFIED",
+        "FORMAT_JPEG",
+        "FORMAT_PNG",
+        "FORMAT_MP3",
+        "FORMAT_WAV"
+      ],
+      "default": "FORMAT_UNKNOWN_UNSPECIFIED",
+      "title": "Enum to represent known image or sound formats"
+    },
+    "v1Message": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "type": "string"
+        },
+        "format": {
+          "$ref": "#/definitions/v1MessageFormat"
+        }
+      }
+    },
+    "v1MessageFormat": {
+      "type": "string",
+      "enum": [
+        "MESSAGE_FORMAT_UNKNOWN_UNSPECIFIED",
+        "MESSAGE_FORMAT_MARKDOWN_1",
+        "MESSAGE_FORMAT_MARKDOWN_2",
+        "MESSAGE_FORMAT_HTML"
+      ],
+      "default": "MESSAGE_FORMAT_UNKNOWN_UNSPECIFIED"
+    },
+    "v1ResponseType": {
+      "type": "string",
+      "enum": [
+        "RESPONSE_TYPE_UNKNOWN_UNSPECIFIED",
+        "RESPONSE_TYPE_SUCCESS",
+        "RESPONSE_TYPE_ERROR"
+      ],
+      "default": "RESPONSE_TYPE_UNKNOWN_UNSPECIFIED"
+    },
+    "v1User": {
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "userName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
